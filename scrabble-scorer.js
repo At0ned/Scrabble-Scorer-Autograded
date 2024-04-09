@@ -32,19 +32,73 @@ function oldScrabbleScorer(word) {
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
 
+// you need to uncomment in run program and finish case insensitive for simple scorer. and change initial prompt
+
 function initialPrompt() {
-   console.log("Let's play some scrabble! Enter a word:");
+   let wordEntry = input.question("Let's play some scrabble! Enter a word: ");
+   return wordEntry;
 };
 
-let simpleScorer;
+let simpleScorer =   {
+   name: "Simple score",
+   description: "Each letter is worth 1 point",
+   Score: function (word) {
+   let score = (word.length);
+return console.log(score);
+}
+};
+let vowelBonusScorer = { 
+   name: "Vowel Bonus Score",
+   description: "Vowels are 3 pts, consonants are 1 pt.",
+   Score: function (word) {
+   let score = 0;
+   let i = 0;
+   let realWord = word.toUpperCase()
+   while (i < realWord.length){
+   if (realWord[i] == "A" || realWord[i] == "E" || realWord[i] == "I" || realWord[i] == "O" || realWord[i] == "U") {
+      score += 3
+   } else {
+      score++
+   }
+   i++
+}
+   return console.log(score)
+}
+};
+let scrabbleScorer = {
+   name: "Scrabble",
+   description: "Uses scrabble point system.",
+   Score: oldScrabbleScorer
+};
 
-let vowelBonusScorer;
+const scoringAlgorithms = [simpleScorer, vowelBonusScorer, scrabbleScorer];
 
-let scrabbleScorer;
+function scorerPrompt() {
+   let choice = input.question(`Which scoring algorithm do you want?\n\n 0 - ${simpleScorer.name} - ${simpleScorer.description}\n 1 - ${vowelBonusScorer.name} - ${vowelBonusScorer.description}\n 2 - ${scrabbleScorer.name} - ${scrabbleScorer.description}\nEnter 0, 1, or 2: `)
 
-const scoringAlgorithms = [];
+  let chosenObject;
+   // while (choice > 2 || choice < 0 || isNaN(choice)) {
+   //    let choice = input.question(`Which scoring algorithm do you want?\n\n 0 - ${simpleScorer.name} - ${simpleScorer.description}\n 1 - ${vowelBonusScorer.name} - ${vowelBonusScorer.description}\n 2 - ${scrabbleScorer.name} - ${scrabbleScorer.description}\nEnter 0, 1, or 2: `)
+   // } 
+   
+   if (choice === "0") {
+      chosenObject = simpleScorer.Score();
+       
+   }
+   else if (choice === "1") {
+      chosenObject = vowelBonusScorer.Score();
+      
+   } else if (choice === "2")  {
+      chosenObject = scrabbleScorer.Score();
+      
+   } else {
+      return scorerPrompt();
+   }
 
-function scorerPrompt() {}
+   return chosenObject;
+};
+   // Simple scoring
+   
 
 function transform() {};
 
@@ -52,6 +106,7 @@ let newPointStructure;
 
 function runProgram() {
    initialPrompt();
+   scorerPrompt();
    
 }
 
@@ -69,3 +124,5 @@ module.exports = {
 	runProgram: runProgram,
 	scorerPrompt: scorerPrompt
 };
+
+// with this commit, the input is not being registered in the object
