@@ -32,18 +32,25 @@ function oldScrabbleScorer(word) {
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
 
-// you need to uncomment in run program and finish case insensitive for simple scorer. and change initial prompt
+// you need to uncomment in run program. figure out transform function, figure out how to get the initial prompt output into the function scorerprompt
 
-function initialPrompt() {
-   let wordEntry = input.question("Let's play some scrabble! Enter a word: ");
-   return wordEntry;
+let word;
+ function initialPrompt(word) {
+  word = input.question("Let's play some scrabble! Enter a word: ");
+  if (!isNaN(Number(word))) {
+   initialPrompt()
+}
+   return word;
 };
+
+ word = initialPrompt(word)
+
 
 let simpleScorer =   {
    name: "Simple score",
    description: "Each letter is worth 1 point",
-   Score: function (word) {
-   let score = (word.length);
+   Score: function () {
+let score = (word.length);
 return console.log(score);
 }
 };
@@ -75,40 +82,48 @@ const scoringAlgorithms = [simpleScorer, vowelBonusScorer, scrabbleScorer];
 
 function scorerPrompt() {
    let choice = input.question(`Which scoring algorithm do you want?\n\n 0 - ${simpleScorer.name} - ${simpleScorer.description}\n 1 - ${vowelBonusScorer.name} - ${vowelBonusScorer.description}\n 2 - ${scrabbleScorer.name} - ${scrabbleScorer.description}\nEnter 0, 1, or 2: `)
-
+   
   let chosenObject;
-   // while (choice > 2 || choice < 0 || isNaN(choice)) {
-   //    let choice = input.question(`Which scoring algorithm do you want?\n\n 0 - ${simpleScorer.name} - ${simpleScorer.description}\n 1 - ${vowelBonusScorer.name} - ${vowelBonusScorer.description}\n 2 - ${scrabbleScorer.name} - ${scrabbleScorer.description}\nEnter 0, 1, or 2: `)
-   // } 
+  
+   
    
    if (choice === "0") {
-      chosenObject = simpleScorer.Score();
-       
+      chosenObject = simpleScorer.Score(word);
+    
    }
    else if (choice === "1") {
-      chosenObject = vowelBonusScorer.Score();
+      chosenObject = vowelBonusScorer.Score(word);
       
    } else if (choice === "2")  {
-      chosenObject = scrabbleScorer.Score();
+      chosenObject = scrabbleScorer.Score(word);
       
    } else {
       return scorerPrompt();
    }
 
-   return chosenObject;
+   return console.log(`The total for ${word} is ${chosenObject}`) ;
 };
-   // Simple scoring
+   
    
 
-function transform() {};
+function transform(oldPointStructure) {
+   let brandNew = {};
+   for (oldPointStructure["2"] in oldPointStructure) {
+      if (oldPointStructure.includes())
+      brandNew["a"] = (oldPointStructure[1][0])
+   }
+   return console.log(brandNew)
+};
 
 let newPointStructure;
 
 function runProgram() {
    initialPrompt();
    scorerPrompt();
+   //transform(oldPointStructure);
    
 }
+
 
 // Don't write any code below this line //
 // And don't change these or your program will not run as expected //
