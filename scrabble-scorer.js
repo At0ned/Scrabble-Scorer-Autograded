@@ -44,33 +44,37 @@ function initialPrompt() {
    return word;
 };
 
+function simpleScorer(word) {
+   let score = (word.length);
+   return score;
+};
 
-
-let simpleScorer = {
+let simple = {
    name: "Simple score",
    description: "Each letter is worth 1 point",
-   Score: function (word) {
-      let score = (word.length);
-      return score;
-   }
+   Score: simpleScorer
 };
-let vowelBonusScorer = {
+
+function vowelBonusScorer(word) {
+   let score = 0;
+   let i = 0;
+   let realWord = word.toUpperCase()
+   while (i < realWord.length) {
+      if (realWord[i] == "A" || realWord[i] == "E" || realWord[i] == "I" || realWord[i] == "O" || realWord[i] == "U") {
+         score += 3
+      } else {
+         score++
+      }
+      i++
+   }
+   return score
+}
+
+
+let vowelBonus = {
    name: "Vowel Bonus Score",
    description: "Vowels are 3 pts, consonants are 1 pt.",
-   Score: function (word) {
-      let score = 0;
-      let i = 0;
-      let realWord = word.toUpperCase()
-      while (i < realWord.length) {
-         if (realWord[i] == "A" || realWord[i] == "E" || realWord[i] == "I" || realWord[i] == "O" || realWord[i] == "U") {
-            score += 3
-         } else {
-            score++
-         }
-         i++
-      }
-      return score
-   }
+   Score: vowelBonusScorer
 };
 let scrabbleScorer = {
    name: "Scrabble",
@@ -78,7 +82,7 @@ let scrabbleScorer = {
    Score: oldScrabbleScorer
 };
 
-const scoringAlgorithms = [simpleScorer, vowelBonusScorer, scrabbleScorer];
+const scoringAlgorithms = [simple, vowelBonus, scrabbleScorer];
 
 function scorerPrompt() {
    let choice = input.question(`Which scoring algorithm do you want?\n\n 0 - ${simpleScorer.name} - ${simpleScorer.description}\n 1 - ${vowelBonusScorer.name} - ${vowelBonusScorer.description}\n 2 - ${scrabbleScorer.name} - ${scrabbleScorer.description}\nEnter 0, 1, or 2: `)
@@ -87,11 +91,11 @@ function scorerPrompt() {
    //scoringalgorithms[0]... make more efficient
 
    if (choice === "0") {
-      chosenObject = simpleScorer;
+      chosenObject = simple;
 
    }
    else if (choice === "1") {
-      chosenObject = vowelBonusScorer;
+      chosenObject = vowelBonus;
 
    } else if (choice === "2") {
       chosenObject = scrabbleScorer;
