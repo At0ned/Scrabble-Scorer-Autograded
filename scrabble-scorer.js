@@ -106,15 +106,17 @@ function scorerPrompt() {
 
    return chosenObject;
 };
-// chosenObject = scorerPrompt()
-// console.log(chosenObject.Score(initialPrompt(word)));
+
 
 
 function transform(oldPointStructure) {
    let brandNew = {};
-   for (oldPointStructure["2"] in oldPointStructure) {
-      if (oldPointStructure.includes())
-         brandNew["a"] = (oldPointStructure[1][0])
+   for (item in oldPointStructure) {
+   const arr = oldPointStructure[item]
+   for (let i = 0; i < arr.length; i++) {
+      brandNew[arr[i]] = item[i]
+   }
+     
    }
    return console.log(brandNew)
 };
@@ -125,7 +127,7 @@ function runProgram() {
    const word = initialPrompt();
    const chosenObject = scorerPrompt();
    console.log(chosenObject.Score(word));
-   //transform(oldPointStructure);
+   transform(oldPointStructure);
 
 }
 
