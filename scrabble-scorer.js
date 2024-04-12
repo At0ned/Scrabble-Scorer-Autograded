@@ -52,7 +52,7 @@ function simpleScorer(word) {
 let simple = {
    name: "Simple score",
    description: "Each letter is worth 1 point",
-   Score: simpleScorer
+   scoringFunction: simpleScorer
 };
 
 function vowelBonusScorer(word) {
@@ -74,12 +74,15 @@ function vowelBonusScorer(word) {
 let vowelBonus = {
    name: "Vowel Bonus Score",
    description: "Vowels are 3 pts, consonants are 1 pt.",
-   Score: vowelBonusScorer
+   scoringFunction: vowelBonusScorer
 };
+
+let newPointStructure = transform(oldPointStructure);
+
 let scrabbleScorer = {
    name: "Scrabble",
    description: "Uses scrabble point system.",
-   Score: oldScrabbleScorer
+   scoringFunction: newPointStructure
 };
 
 const scoringAlgorithms = [simple, vowelBonus, scrabbleScorer];
@@ -112,22 +115,23 @@ function scorerPrompt() {
 function transform(oldPointStructure) {
    let brandNew = {};
    for (item in oldPointStructure) {
-   const arr = oldPointStructure[item]
+      const arr = oldPointStructure[item]
    for (let i = 0; i < arr.length; i++) {
-      brandNew[arr[i]] = item[i]
+      brandNew[arr[i].toLowerCase()] = Number(item)
    }
-     
    }
-   return console.log(brandNew)
+   
+   return brandNew
 };
 
-let newPointStructure;
+
+// let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
    const word = initialPrompt();
    const chosenObject = scorerPrompt();
-   console.log(chosenObject.Score(word));
-   transform(oldPointStructure);
+   console.log(chosenObject.scoringFunction(word));
+   newPointStructure;
 
 }
 
