@@ -113,24 +113,14 @@ const scoringAlgorithms = [simple, vowelBonus, scrabble];
 function scorerPrompt() {
    let choice = input.question(`Which scoring algorithm do you want?\n\n 0 - ${simple.name} - ${simple.description}\n 1 - ${vowelBonus.name} - ${vowelBonus.description}\n 2 - ${scrabble.name} - ${scrabble.description}\nEnter 0, 1, or 2: `)
 
-   let chosenObject;
-   //scoringalgorithms[0]... make more efficient
+   let chosenObject = scoringAlgorithms[choice];
+   //scoringalgorithms[0] make more efficient
 
-   if (choice === "0") {
-      chosenObject = simple;
-
-   }
-   else if (choice === "1") {
-      chosenObject = vowelBonus;
-
-   } else if (choice === "2") {
-      chosenObject = scrabble;
-
-   } else {
+   if (choice !== "0" && choice !== "1" && choice !== "2") {
       return scorerPrompt();
-   }
+   }   
 
-   return chosenObject;
+      return chosenObject
 };
 
 
@@ -153,7 +143,7 @@ function transform(oldPointStructure) {
 function runProgram() {
    const word = initialPrompt();
    const chosenObject = scorerPrompt();
-   console.log(chosenObject.scoringFunction(word));
+   console.log(chosenObject.scorerFunction(word));
    
 }
 
